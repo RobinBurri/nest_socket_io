@@ -13,7 +13,10 @@ import { Socket, Server } from 'socket.io';
 @WebSocketGateway()
 export class AppGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
+  {
+
+  @WebSocketServer() wss: Server;
+
   private logger: Logger = new Logger('AppGateway');
 
   afterInit(server: Server) {
@@ -28,15 +31,14 @@ export class AppGateway
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  @WebSocketServer() wss: Server;
 
-  @SubscribeMessage('messageToServer')
-  handleMessage(client: Socket, payload: string): WsResponse<string> {
-    return { event: 'messageToClient', data: 'Hello world!' };
+  @SubscribeMessage('chatToServer')
+  handleMessage(client: Socket, payload: string): void {
+    // return { event: 'messageToClient', data: 'Hello world!' };
     // same as (but better type)=> client.emit('messageToClient', 'Hello world!');
     // this send the response only to the client that sent the message.
 
     // to send to every clients:
-    // this.wss.emit('messageToClient', 'Hello world!');
+    this.wss.emit('chatToClient', payload);
   }
 }
