@@ -6,17 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>That's all</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <link
-      rel="stylesheet"
-      href="https;//unpkg.com/vue-simple-notify/dist/vue-simple-notify.min.css"
-    />
+    <script
+      src="https://unpkg.com/vue-simple-notify/dist/vue-simple-notify.min.js"
+    ></script>
     <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main id="v-app">
       <section class="alerts">
-        <alert-component: items="alerts"></alert-component>
+        <alerts-component :items="alerts"></alerts-component>
       </section>
       <section class="chat">
         <h1>Websockets Tester</h1>
@@ -35,7 +34,7 @@
     </main>
 
     <script>
-      Vue.components('alert-component', VueSimpleNotify.VueSimpleNotify);
+      Vue.component('alerts-component', VueSimpleNotify.VueSimpleNotify);
       const app = new Vue({
         el: '#v-app',
         data: {
